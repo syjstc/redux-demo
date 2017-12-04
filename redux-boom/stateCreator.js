@@ -18,7 +18,7 @@ export const stateCreator = (envName, stateName, { initData, transformers, apis=
 
   let actionTypes = [] // allowed actions which can be used by reducer
   let actionCreators = {} // used by dispatcher
-  const getActionTypeName = actionTypeCreator(envName, stateName)
+  const getActionTypeName = (transformationName) => actionTypeCreator(envName, stateName, transformationName)
 
   const convertTransformerToActionCreator = (transformation, transformationName) => {
     /*

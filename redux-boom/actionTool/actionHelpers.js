@@ -1,8 +1,6 @@
-import { curry } from 'ramda'
-
-export const actionTypeCreator = curry((envName, stateName, transformationName) => {
+export const actionTypeCreator = (envName, stateName, transformationName) => {
   return `${envName}/${stateName}/${transformationName}`
-})
+}
 
 export const parseAction = (actionType) => {
   const actionName = actionType.split('/').pop()
