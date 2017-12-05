@@ -11,7 +11,10 @@ const createAsyncAction = (envName, stateName, typeNames, transformationName, re
       return requestFn(options).then((res) => {
         dispatch({
           type: successTypeName,
-          payload: res,
+          payload: {
+            options,
+            res,
+          },
         })
       }).catch(() => {
         dispatch({

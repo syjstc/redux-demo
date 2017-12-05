@@ -27698,7 +27698,10 @@ var createAsyncAction = function createAsyncAction(envName, stateName, typeNames
       return requestFn(options).then(function (res) {
         dispatch({
           type: successTypeName,
-          payload: res
+          payload: {
+            options: options,
+            res: res
+          }
         });
       }).catch(function () {
         dispatch({
@@ -27985,8 +27988,10 @@ var state = {
       request: function request(state) {
         return state.set('isFetching', true);
       },
-      success: function success(state, list) {
-        var listData = Object.values(list.list);
+      success: function success(state, _ref) {
+        var res = _ref.res;
+
+        var listData = Object.values(res.list);
         return state.set('isFetching', false).set('list', _immutable2.default.fromJS(listData));
       },
       failure: function failure(state) {
@@ -27997,7 +28002,9 @@ var state = {
       request: function request(state) {
         return state.set('isAdding', true);
       },
-      success: function success(state, item) {
+      success: function success(state, _ref2) {
+        var item = _ref2.res;
+
         var list = state.get('list');
         return state.set('list', list.push(_immutable2.default.fromJS(item))).set('isAdding', false);
       },
@@ -28009,8 +28016,8 @@ var state = {
       request: function request(state) {
         return state.set('isDeleting', true);
       },
-      success: function success(state, _ref) {
-        var resrouceId = _ref.resrouceId;
+      success: function success(state, _ref3) {
+        var resrouceId = _ref3.res.resrouceId;
 
         var list = state.get('list');
         list = list.filter(function (item) {
